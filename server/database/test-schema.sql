@@ -36,8 +36,8 @@ create table movie_is_on_list (
 	constraint fk_moil_list_id
 		foreign key (list_id)
 		references list(list_id),
-	constraint uq_moil_movie_list
-		unique (movie_id, list_id)
+	constraint pk_moil_movie_list
+		primary key (movie_id, list_id)
 );
 
 create table genre (
@@ -54,8 +54,8 @@ create table movie_has_genre (
 	constraint fk_mhg_genre_id
 		foreign key (genre_id)
 		references genre(genre_id),
-	constraint uq_mhg_movie_genre
-		unique (movie_id, genre_id)
+	constraint pk_mhg_movie_genre
+		primary key (movie_id, genre_id)
 );
 
 create table director (
@@ -72,8 +72,8 @@ create table movie_directed_by (
 	constraint fk_mdb_director_id
 		foreign key (director_id)
 		references director(director_id),
-	constraint uq_mdb_movie_director
-		unique (movie_id, director_id)
+	constraint pk_mdb_movie_director
+		primary key (movie_id, director_id)
 );
 
 create table physical (

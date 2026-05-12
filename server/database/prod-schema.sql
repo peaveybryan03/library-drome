@@ -12,7 +12,8 @@ create table movie (
 	movie_id int primary key auto_increment,
 	title varchar(256) not null,
 	year int not null,
-	availability enum('none', 'dvd', 'blu-ray', 'both') not null
+	availability enum('none', 'dvd', 'blu-ray', 'both') not null,
+	poster_url text null
 );
 
 create table list (

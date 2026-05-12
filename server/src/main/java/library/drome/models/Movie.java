@@ -1,5 +1,6 @@
 package library.drome.models;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Movie {
@@ -8,6 +9,8 @@ public class Movie {
     private int year;
     private Availability availability;
     private String posterUrl;
+
+    private List<Genre> genres;
 
     public Movie(int movieId, String title, int year, Availability availability, String posterUrl) {
         this.movieId = movieId;
@@ -67,15 +70,23 @@ public class Movie {
         this.posterUrl = posterUrl;
     }
 
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return getMovieId() == movie.getMovieId() && getYear() == movie.getYear() && Objects.equals(getTitle(), movie.getTitle()) && getAvailability() == movie.getAvailability() && Objects.equals(getPosterUrl(), movie.getPosterUrl());
+        return getMovieId() == movie.getMovieId() && getYear() == movie.getYear() && Objects.equals(getTitle(), movie.getTitle()) && getAvailability() == movie.getAvailability() && Objects.equals(getPosterUrl(), movie.getPosterUrl()) && Objects.equals(getGenres(), movie.getGenres());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getMovieId(), getTitle(), getYear(), getAvailability(), getPosterUrl());
+        return Objects.hash(getMovieId(), getTitle(), getYear(), getAvailability(), getPosterUrl(), getGenres());
     }
 }

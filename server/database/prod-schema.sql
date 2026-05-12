@@ -16,7 +16,7 @@ create table movie (
 	poster_url text null
 );
 
-create table list (
+create table film_list (
 	list_id int primary key auto_increment,
 	title varchar(256) not null,
 	user_id int,
@@ -35,7 +35,7 @@ create table movie_is_on_list (
 		references movie(movie_id),
 	constraint fk_moil_list_id
 		foreign key (list_id)
-		references list(list_id),
+		references film_list(list_id),
 	constraint pk_moil_movie_list
 		primary key (movie_id, list_id)
 );

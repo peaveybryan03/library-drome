@@ -16,7 +16,7 @@ create table movie (
 	poster_url text null
 );
 
-create table li
+create table list (
 	list_id int primary key auto_increment,
 	title varchar(256) not null,
 	user_id int,

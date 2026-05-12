@@ -3,12 +3,12 @@ package library.drome.models;
 import java.util.Objects;
 
 public class User {
-    private int user_id;
+    private int userId;
     private String email;
     private String password;
 
-    public User(int user_id, String email, String password) {
-        this.user_id = user_id;
+    public User(int userId, String email, String password) {
+        this.userId = userId;
         this.email = email;
         this.password = password;
     }
@@ -17,12 +17,12 @@ public class User {
 
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -45,11 +45,11 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return getUser_id() == user.getUser_id() && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword());
+        return getUserId() == user.getUserId() && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser_id(), getEmail(), getPassword());
+        return Objects.hash(getUserId(), getEmail(), getPassword());
     }
 }

@@ -11,6 +11,7 @@ public class Movie {
     private String posterUrl;
 
     private List<Genre> genres;
+    private List<Director> directors;
 
     public Movie(int movieId, String title, int year, Availability availability, String posterUrl) {
         this.movieId = movieId;
@@ -78,15 +79,23 @@ public class Movie {
         this.genres = genres;
     }
 
+    public List<Director> getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(List<Director> directors) {
+        this.directors = directors;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return getMovieId() == movie.getMovieId() && getYear() == movie.getYear() && Objects.equals(getTitle(), movie.getTitle()) && getAvailability() == movie.getAvailability() && Objects.equals(getPosterUrl(), movie.getPosterUrl()) && Objects.equals(getGenres(), movie.getGenres());
+        return getMovieId() == movie.getMovieId() && getYear() == movie.getYear() && Objects.equals(getTitle(), movie.getTitle()) && getAvailability() == movie.getAvailability() && Objects.equals(getPosterUrl(), movie.getPosterUrl()) && Objects.equals(getGenres(), movie.getGenres()) && Objects.equals(getDirectors(), movie.getDirectors());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getMovieId(), getTitle(), getYear(), getAvailability(), getPosterUrl(), getGenres());
+        return Objects.hash(getMovieId(), getTitle(), getYear(), getAvailability(), getPosterUrl(), getGenres(), getDirectors());
     }
 }

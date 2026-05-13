@@ -20,6 +20,28 @@ public class UserService {
         this.validator = validator;
     }
 
+    public Result<User> authenticate(User user) throws DataAccessException {
+        Result<User> result = new Result<>();
+
+        User userFromDatabase = repository.findByEmail(user.getEmail());
+
+        if (userFromDatabase == null) {
+            result.addErrorMessage("User does not exist.", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        int hashedProposedPassword = Objects.hash(user.getPassword());
+        String hashedProposedPasswordString = String.valueOf(hashedProposedPassword);
+
+        if (userFromDatabase.getPassword().equals(hashedProposedPasswordString)) {
+            result.setpayload(userFromDatabase);
+        } else {
+            result.addErrorMessage("Incorrect password.", ResultType.INVALID);
+        }
+
+        return result;
+    }
+
     public Result<User> create(User user) throws DataAccessException {
         Result<User> result = new Result<>();
 

@@ -24,6 +24,47 @@ class UserServiceTest {
     UserRepository repository;
 
     @Test
+    void authenticateHappyPath() throws DataAccessException {
+        User proposedUserLogin = TestDataHelper.existingUser();
+        proposedUserLogin.setUserId(0);
+        User userFromDatabase = TestDataHelper.existingUserFromDatabase();
+        when(repository.findByEmail(proposedUserLogin.getEmail())).thenReturn(userFromDatabase);
+
+        Result<User> actual = service.authenticate(proposedUserLogin);
+
+        assertTrue(actual.isSuccess());
+        assertEquals(userFromDatabase, actual.getpayload());
+    }
+
+    @Test
+    void authenticateEmailNotFound() throws DataAccessException {
+        User proposedUserLogin = TestDataHelper.existingUser();
+        proposedUserLogin.setUserId(0);
+        when(repository.findByEmail(proposedUserLogin.getEmail())).thenReturn(null);
+
+        Result<User> actual = service.authenticate(proposedUserLogin);
+
+        assertEquals(ResultType.NOT_FOUND, actual.getResultType());
+        assertNull(actual.getpayload());
+        assertEquals("User does not exist.", actual.getErrorMessages().get(0));
+    }
+
+    @Test
+    void authenticateWrongPassword() throws DataAccessException {
+        User proposedUserLogin = TestDataHelper.existingUser();
+        proposedUserLogin.setUserId(0);
+        proposedUserLogin.setPassword("incorrect");
+        User userFromDatabase = existingUserFromDatabase();
+        when(repository.findByEmail(proposedUserLogin.getEmail())).thenReturn(userFromDatabase);
+
+        Result<User> actual = service.authenticate(proposedUserLogin);
+
+        assertEquals(ResultType.INVALID, actual.getResultType());
+        assertNull(actual.getpayload());
+        assertEquals("Incorrect password.", actual.getErrorMessages().get(0));
+    }
+
+    @Test
     void createFailsWhenEmailIsBlank() throws DataAccessException {
         User toCreate = userToCreate();
         toCreate.setEmail("");

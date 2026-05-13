@@ -1,5 +1,38 @@
 @base_url = http://localhost:8080/api/user
 
+# login happy path
+POST {{base_url}}/login
+Content-Type: application/json
+
+{
+  "email": "peaveybryan03@gmail.com",
+  "password": "password"
+}
+
+###
+
+# login not found
+POST {{base_url}}/login
+Content-Type: application/json
+
+{
+  "email": "z@z.com",
+  "password": "a"
+}
+
+###
+
+# login wrong password
+POST {{base_url}}/login
+Content-Type: application/json
+
+{
+  "email": "peaveybryan03@gmail.com",
+  "password": "incorrect"
+}
+
+###
+
 # CREATE happy path
 POST {{base_url}} HTTP/1.1
 Content-Type: application/json

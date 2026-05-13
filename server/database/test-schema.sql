@@ -107,12 +107,12 @@ create table rating (
 delimiter //
 create procedure set_known_good_state()
 begin
-	-- delete from solar_panel;
-    -- alter table solar_panel auto_increment = 1;
+	delete from `user`;
+    alter table `user` auto_increment = 1;
 
-    -- insert into user (email, password) values
-        -- ("a@a.com", "a"),
-        -- ("b@b.com", "b");
+    insert into `user` (email, password) values
+        ("a@a.com", "a"),
+        ("b@b.com", "b");
 
 
 end //

@@ -111,8 +111,8 @@ begin
     alter table `user` auto_increment = 1;
 
     insert into `user` (email, password) values
-        ("a@a.com", "a"),
-        ("b@b.com", "b");
+        ("a@a.com", "128"),
+        ("b@b.com", "129");
 
 
 end //

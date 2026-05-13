@@ -56,15 +56,15 @@ class UserServiceTest {
         assertTrue(actual.getErrorMessages().contains("Password is required."));
     }
 
-//    @Test
-//    void createFailsWhenEmailIsDuplicate() throws DataAccessException {
-//        when(repository.findByEmail(userToCreate().getEmail())).thenReturn(existingUser());
-//
-//        Result<User> actual = service.create(userToCreate());
-//
-//        assertEquals(ResultType.INVALID, actual.getResultType());
-//        assertTrue(actual.getErrorMessages().contains("Email is already taken."));
-//    }
+    @Test
+    void createFailsWhenEmailIsDuplicate() throws DataAccessException {
+        when(repository.findByEmail(userToCreate().getEmail())).thenReturn(existingUser());
+
+        Result<User> actual = service.create(userToCreate());
+
+        assertEquals(ResultType.INVALID, actual.getResultType());
+        assertTrue(actual.getErrorMessages().contains("Email is already taken."));
+    }
 
     @Test
     void createHappyPath() throws DataAccessException {

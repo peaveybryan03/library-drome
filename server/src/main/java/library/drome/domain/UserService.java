@@ -32,9 +32,9 @@ public class UserService {
             return result;
         }
 
-//        if (repository.findByEmail(user.getEmail()) != null) {
-//            result.addErrorMessage("Email is already taken", ResultType.INVALID);
-//        }
+        if (repository.findByEmail(user.getEmail()) != null) {
+            result.addErrorMessage("Email is already taken.", ResultType.INVALID);
+        }
 
         if (result.isSuccess()) {
             int hashedPassword = Objects.hash(user.getPassword());

@@ -4,7 +4,7 @@ use librarydrome;
 
 create table user (
 	user_id int primary key auto_increment,
-	email varchar(256) not null,
+	email varchar(256) not null unique,
 	password varchar(256) not null
 );
 

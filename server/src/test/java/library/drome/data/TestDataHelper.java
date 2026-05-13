@@ -2,6 +2,8 @@ package library.drome.data;
 
 import library.drome.models.User;
 
+import java.util.Objects;
+
 public class TestDataHelper {
     public static User existingUser() {
         return new User(1, "a@a.com", "a");
@@ -14,6 +16,7 @@ public class TestDataHelper {
     public static User userAfterCreate() {
         User user = userToCreate();
         user.setUserId(3);
+        user.setPassword(String.valueOf(Objects.hash(user.getPassword())));
         return user;
     }
 }

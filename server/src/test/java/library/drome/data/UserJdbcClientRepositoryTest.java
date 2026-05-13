@@ -26,7 +26,8 @@ class UserJdbcClientRepositoryTest {
     @Test
     void shouldCreate() {
         User toCreate = TestDataHelper.userToCreate();
-        User expected = TestDataHelper.userAfterCreate();
+        User expected = TestDataHelper.userToCreate();
+        expected.setUserId(3);
 
         // assertNull(repository.findByEmail(toCreate.getEmail()));
 

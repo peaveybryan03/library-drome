@@ -2,7 +2,10 @@ import { useState } from "react"
 import Layout from "./Layout"
 import Home from "./Home"
 import NotFound from "./NotFound"
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
+import UserLayout from "./users/UserLayout"
+import UserForm from "./users/UserForm"
+import UserLoginForm from "./users/UserLoginForm"
 
 type User = {
     email: string
@@ -23,6 +26,20 @@ function AppRouter() {
                 {
                     path: "/",
                     element: <Home />
+                },
+                {
+                    path: "users",
+                    element: <UserLayout />,
+                    children: [
+                        {
+                            path: "add",
+                            element: loggedInUser === null ? <UserForm /> : <Navigate to="/" state={{message: "You are already logged in."}} />
+                        },
+                        {
+                            path: "login",
+                            element: loggedInUser === null ? <UserLoginForm setLoggedInUser={setLoggedInUser} /> : <Navigate to="/" state={{message: "You are already logged in."}} />
+                        }
+                    ]
                 },
                 {
                     path: "*",

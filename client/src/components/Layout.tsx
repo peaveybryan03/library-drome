@@ -22,7 +22,6 @@ function Layout({loggedInUser, setLoggedInUser}: LayoutProps) {
                 <Nav loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
             </header>
             <main>
-                <h1>LibraryDrome</h1>
                 {message && <p>{message}</p>}
                 <Outlet />
             </main>

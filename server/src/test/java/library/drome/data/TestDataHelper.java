@@ -9,6 +9,10 @@ public class TestDataHelper {
         return new User(1, "a@a.com", "a");
     }
 
+    public static User existingUserFromDatabase() {
+        return new User(1, "a@a.com", "128");
+    }
+
     public static User userToCreate() {
         return new User(0, "c@c.com", "c");
     }

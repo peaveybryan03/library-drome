@@ -8,6 +8,7 @@ import library.drome.data.UserRepository;
 import library.drome.models.FilmList;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,6 +21,10 @@ public class ListService {
         this.listRepository = listRepository;
         this.userRepository = userRepository;
         this.validator = validator;
+    }
+
+    public List<FilmList> findByUserId(int userId) {
+        return listRepository.findByUserId(userId);
     }
 
     public Result<FilmList> create(FilmList list) throws DataAccessException {

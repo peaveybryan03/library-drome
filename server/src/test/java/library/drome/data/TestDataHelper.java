@@ -25,8 +25,12 @@ public class TestDataHelper {
         return user;
     }
 
+    public static FilmList existingList() {
+        return new FilmList(1, "list 1", 1);
+    }
+
     public static FilmList listToCreate() {
-        return new FilmList(0, "List 3", 1);
+        return new FilmList(0, "list 3", 1);
     }
 
     public static FilmList listAfterCreate() {

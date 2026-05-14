@@ -1,5 +1,6 @@
 package library.drome.data;
 
+import library.drome.models.FilmList;
 import library.drome.models.User;
 
 import java.util.Objects;
@@ -22,5 +23,15 @@ public class TestDataHelper {
         user.setUserId(3);
         user.setPassword(String.valueOf(Objects.hash(user.getPassword())));
         return user;
+    }
+
+    public static FilmList listToCreate() {
+        return new FilmList(0, "List 3", 1);
+    }
+
+    public static FilmList listAfterCreate() {
+        FilmList list = listToCreate();
+        list.setListId(3);
+        return list;
     }
 }

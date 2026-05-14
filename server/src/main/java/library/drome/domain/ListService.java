@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import library.drome.data.DataAccessException;
 import library.drome.data.ListRepository;
+import library.drome.data.UserRepository;
 import library.drome.models.FilmList;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,13 @@ import java.util.Set;
 
 @Service
 public class ListService {
-    private final ListRepository repository;
+    private final ListRepository listRepository;
+    private final UserRepository userRepository;
     private final Validator validator;
 
-    public ListService(ListRepository repository, Validator validator) {
-        this.repository = repository;
+    public ListService(ListRepository listRepository, UserRepository userRepository, Validator validator) {
+        this.listRepository = listRepository;
+        this.userRepository = userRepository;
         this.validator = validator;
     }
 
@@ -30,10 +33,12 @@ public class ListService {
             return result;
         }
 
-        // check for user by id
+        if (userRepository.findById(list.getUserId()) == null) {
+            result.addErrorMessage("User not found.", ResultType.NOT_FOUND);
+        }
 
         if (result.isSuccess()) {
-            FilmList created = repository.create(list);
+            FilmList created = listRepository.create(list);
             result.setpayload(created);
         }
 

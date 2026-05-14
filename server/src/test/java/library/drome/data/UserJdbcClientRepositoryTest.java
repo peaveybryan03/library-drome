@@ -38,6 +38,20 @@ class UserJdbcClientRepositoryTest {
     }
 
     @Test
+    void findByIdHappyPath() throws DataAccessException {
+        User actual = repository.findById(1);
+
+        assertEquals(TestDataHelper.existingUserFromDatabase(), actual);
+    }
+
+    @Test
+    void findByIdFailsToFind() throws DataAccessException {
+        User actual = repository.findById(999);
+
+        assertNull(actual);
+    }
+
+    @Test
     void shouldCreate() {
         User toCreate = TestDataHelper.userToCreate();
         User expected = TestDataHelper.userToCreate();

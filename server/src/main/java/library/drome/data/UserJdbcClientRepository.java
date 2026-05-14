@@ -16,8 +16,16 @@ public class UserJdbcClientRepository implements UserRepository {
 
     @Override
     public User findByEmail(String email) {
-        return jdbcClient.sql("select * from user where user.email = :email")
+        return jdbcClient.sql("select * from user where user.email = :email;")
                 .param("email", email)
+                .query(User.class)
+                .optional().orElse(null);
+    }
+
+    @Override
+    public User findById(int userId) {
+        return jdbcClient.sql("select * from user where user.user_id = :user_id;")
+                .param("user_id", userId)
                 .query(User.class)
                 .optional().orElse(null);
     }

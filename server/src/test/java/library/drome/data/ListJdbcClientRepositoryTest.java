@@ -45,11 +45,11 @@ class ListJdbcClientRepositoryTest {
         FilmList toCreate = TestDataHelper.listToCreate();
         FilmList expected = TestDataHelper.listAfterCreate();
 
-        // assert not present in repo w/ findBy
+        assertFalse(repository.findByUserId(toCreate.getUserId()).contains(TestDataHelper.listAfterCreate()));
 
         FilmList actual = repository.create(toCreate);
 
         assertEquals(expected, actual);
-        // assert present in repo w/ findBy
+        assertTrue(repository.findByUserId(toCreate.getUserId()).contains(TestDataHelper.listAfterCreate()));
     }
 }

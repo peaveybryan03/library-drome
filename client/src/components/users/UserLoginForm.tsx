@@ -70,12 +70,12 @@ function UserLoginForm({ loggedInUser, setLoggedInUser }: UserLoginFormProps) {
 
                 <div className="form-control">
                     <label htmlFor="email-input">Email: </label>
-                    <input type="text" id="email-input" name="email" onChange={handleChange} value={user.email}/>
+                    <input type="text" id="email-input" name="email" onChange={handleChange} value={user.email} required />
                 </div>
 
                 <div className="form-control">
                     <label htmlFor="password-input">Password: </label>
-                    <input type="password" id="password-input" name="password" onChange={handleChange} value={user.password} />
+                    <input type="password" id="password-input" name="password" onChange={handleChange} value={user.password} required />
                 </div>
 
                 <div className="form-control">

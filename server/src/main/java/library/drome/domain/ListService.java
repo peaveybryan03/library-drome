@@ -35,6 +35,14 @@ public class ListService {
 
         if (userRepository.findById(list.getUserId()) == null) {
             result.addErrorMessage("User not found.", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        for (FilmList existingList : listRepository.findByUserId(list.getUserId())) {
+            if (existingList.getTitle().equals(list.getTitle())) {
+                result.addErrorMessage("User already has a list with this title.", ResultType.INVALID);
+            }
+            break;
         }
 
         if (result.isSuccess()) {

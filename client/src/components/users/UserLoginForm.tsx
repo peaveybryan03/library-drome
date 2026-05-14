@@ -46,9 +46,9 @@ function UserLoginForm({ setLoggedInUser }: UserLoginFormProps) {
             const parsedUser = JSON.parse(userStringAndTotalString[0]) 
             parsedUser.diyJwt = payload.user
 
-            setLoggedInUser(parsedUser)
             localStorage.setItem("loggedInUser", JSON.stringify(parsedUser))
             navigate("/", { state: { message: "You are now logged in" }})
+            setLoggedInUser(parsedUser)
         } else {
             setErrors(payload)
         }
@@ -64,7 +64,7 @@ function UserLoginForm({ setLoggedInUser }: UserLoginFormProps) {
 
                 <div className="form-control">
                     <label htmlFor="email-input">Email: </label>
-                    <input type="text" id="email-input" name="email" onChange={handleChange} value={user?.password}/>
+                    <input type="text" id="email-input" name="email" onChange={handleChange} value={user.email}/>
                 </div>
 
                 <div className="form-control">

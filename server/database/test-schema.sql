@@ -107,12 +107,18 @@ create table rating (
 delimiter //
 create procedure set_known_good_state()
 begin
+	delete from film_list;
+	alter table film_list auto_increment = 1;
 	delete from `user`;
     alter table `user` auto_increment = 1;
 
     insert into `user` (email, password) values
         ("a@a.com", "128"),
         ("b@b.com", "129");
+    
+    insert into film_list (title, user_id) values
+    	("list 1", 1),
+    	("list 2", 2);
 
 
 end //

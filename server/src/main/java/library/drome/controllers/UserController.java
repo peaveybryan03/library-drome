@@ -9,6 +9,7 @@ import library.drome.domain.ResultType;
 import library.drome.domain.UserService;
 import library.drome.models.User;
 import library.drome.models.UserWithoutPasswordDto;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -60,7 +61,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody @Valid User user, BindingResult bindingResult) throws DataAccessException {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList(), HttpStatus.BAD_REQUEST);
         }
 
         Result<User> result = service.create(user);

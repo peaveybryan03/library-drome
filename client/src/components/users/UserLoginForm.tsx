@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 type User = {
@@ -7,11 +7,18 @@ type User = {
 }
 
 type UserLoginFormProps = {
+    loggedInUser: User | null
     setLoggedInUser: React.Dispatch<React.SetStateAction<User | null>>
 }
 
-function UserLoginForm({ setLoggedInUser }: UserLoginFormProps) {
+function UserLoginForm({ loggedInUser, setLoggedInUser }: UserLoginFormProps) {
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (loggedInUser !== null) {
+            navigate("/", { state: { message: "You are now logged in."}} )
+        }
+    }, [loggedInUser])
 
     const [user, setUser] = useState<User>({
         email: "",
@@ -47,7 +54,6 @@ function UserLoginForm({ setLoggedInUser }: UserLoginFormProps) {
             parsedUser.diyJwt = payload.user
 
             localStorage.setItem("loggedInUser", JSON.stringify(parsedUser))
-            navigate("/", { state: { message: "You are now logged in" }})
             setLoggedInUser(parsedUser)
         } else {
             setErrors(payload)

@@ -37,7 +37,7 @@ function AppRouter() {
                         },
                         {
                             path: "login",
-                            element: loggedInUser === null ? <UserLoginForm setLoggedInUser={setLoggedInUser} /> : <Navigate to="/" state={{message: "You are already logged in."}} />
+                            element: <UserLoginForm loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
                         }
                     ]
                 },

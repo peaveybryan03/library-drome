@@ -21,7 +21,7 @@ public class ListController {
         this.service = service;
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<Object> findByUserId(@PathVariable int userId, @RequestHeader Map<String, String> headers) throws DataAccessException {
         AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
 

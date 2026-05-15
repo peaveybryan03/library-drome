@@ -2,7 +2,7 @@
 @diy_jwt = {\"userId\":1,\"email\":\"peaveybryan03@gmail.com\"}|-1329476323
 
 # findByUserId - 1
-GET {{base_url}}/1 HTTP/1.1
+GET {{base_url}}/user/1 HTTP/1.1
 Authorization: {{diy_jwt}}
 
 ###

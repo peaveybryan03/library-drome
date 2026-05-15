@@ -59,11 +59,8 @@ public class ListController {
         }
 
         FilmList existingList = service.findByListId(listId);
-        if (existingList == null) {
-            return new ResponseEntity<>(List.of("List does not exist."), HttpStatus.NOT_FOUND);
-        }
 
-        if (authorizationResult.getUser().getUserId() != existingList.getUserId()) {
+        if (existingList != null && authorizationResult.getUser().getUserId() != existingList.getUserId()) {
             return new ResponseEntity<>(List.of("Cannot delete a list you do not own."), HttpStatus.FORBIDDEN);
         }
 

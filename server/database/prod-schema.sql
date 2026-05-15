@@ -32,10 +32,12 @@ create table movie_is_on_list (
 	list_id int,
 	constraint fk_moil_movie_id
 		foreign key (movie_id)
-		references movie(movie_id),
+		references movie(movie_id)
+		on delete cascade,
 	constraint fk_moil_list_id
 		foreign key (list_id)
-		references film_list(list_id),
+		references film_list(list_id)
+		on delete cascade,
 	constraint pk_moil_movie_list
 		primary key (movie_id, list_id)
 );

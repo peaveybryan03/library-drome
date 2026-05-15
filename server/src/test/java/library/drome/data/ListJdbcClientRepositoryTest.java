@@ -52,4 +52,19 @@ class ListJdbcClientRepositoryTest {
         assertEquals(expected, actual);
         assertTrue(repository.findByUserId(toCreate.getUserId()).contains(TestDataHelper.listAfterCreate()));
     }
+
+    @Test
+    void shouldDelete() {
+        boolean actual = repository.deleteById(1);
+
+        assertTrue(actual);
+        assertTrue(repository.findByUserId(1).isEmpty());
+    }
+
+    @Test
+    void shouldNotDeleteWhenNotFound() {
+        boolean actual = repository.deleteById(999);
+
+        assertFalse(actual);
+    }
 }

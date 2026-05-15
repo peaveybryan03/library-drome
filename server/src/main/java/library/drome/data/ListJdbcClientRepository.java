@@ -49,4 +49,10 @@ public class ListJdbcClientRepository implements ListRepository {
         list.setListId(keyHolder.getKey().intValue());
         return list;
     }
+
+    @Override
+    public boolean deleteById(int listId) {
+        final String sql = "delete from film_list where list_id = :list_id;";
+        return jdbcClient.sql(sql).param("list_id", listId).update() > 0;
+    }
 }

@@ -78,6 +78,7 @@ public class ListService {
 
         if (listRepository.findByListId(listId) == null) {
             result.addErrorMessage("List id %s was not found.", ResultType.NOT_FOUND, listId);
+            return result;
         }
 
         List<Movie> moviesAlreadyOnList = listRepository.findMoviesByListId(listId);
@@ -87,7 +88,9 @@ public class ListService {
             }
         }
 
-        listRepository.addMovieToList(movieId, listId);
+        if (result.isSuccess()) {
+            listRepository.addMovieToList(movieId, listId);
+        }
 
         return result;
     }

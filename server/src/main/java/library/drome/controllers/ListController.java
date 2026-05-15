@@ -42,6 +42,10 @@ public class ListController {
         }
 
         FilmList result = service.findByListId(listId);
+
+        if (result.getUserId() != authorizationResult.getUser().getUserId()) {
+            return new ResponseEntity<>(List.of("Cannot view a list you do not own."), HttpStatus.FORBIDDEN);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

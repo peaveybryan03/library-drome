@@ -13,6 +13,12 @@ Authorization: {{diy_jwt}}
 
 ###
 
+# findByListId someone else's list
+GET {{base_url}}/2 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
 # create happy path
 POST {{base_url}} HTTP/1.1
 Authorization: {{diy_jwt}}

@@ -6,6 +6,7 @@ import library.drome.data.DataAccessException;
 import library.drome.data.ListRepository;
 import library.drome.data.UserRepository;
 import library.drome.models.FilmList;
+import library.drome.models.Movie;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,6 +67,46 @@ public class ListService {
         Result<FilmList> result = new Result<>();
         if (!listRepository.deleteById(listId)) {
             result.addErrorMessage("List id %s was not found.", ResultType.NOT_FOUND, listId);
+        }
+        return result;
+    }
+
+    public Result<FilmList> addMovieToList(int movieId, int listId) {
+        Result<FilmList> result = new Result<>();
+
+        // is movie in repo? !!!
+
+        if (listRepository.findByListId(listId) == null) {
+            result.addErrorMessage("List id %s was not found.", ResultType.NOT_FOUND, listId);
+            return result;
+        }
+
+        List<Movie> moviesAlreadyOnList = listRepository.findMoviesByListId(listId);
+        for (Movie existing : moviesAlreadyOnList) {
+            if (existing.getMovieId() == movieId) {
+                result.addErrorMessage("Movie id %s is already on list id %s.", ResultType.INVALID, movieId, listId);
+            }
+        }
+
+        if (result.isSuccess()) {
+            listRepository.addMovieToList(movieId, listId);
+        }
+
+        return result;
+    }
+
+    public Result<FilmList> removeMovieFromList(int movieId, int listId) {
+        Result<FilmList> result = new Result<>();
+
+        // is movie in repo? !!!
+
+        if (listRepository.findByListId(listId) == null) {
+            result.addErrorMessage("List id %s was not found.", ResultType.NOT_FOUND, listId);
+            return result;
+        }
+
+        if (!listRepository.removeMovieFromList(movieId, listId)) {
+            result.addErrorMessage("Movie id %s was not found on list id %s.", ResultType.NOT_FOUND, movieId, listId);
         }
         return result;
     }

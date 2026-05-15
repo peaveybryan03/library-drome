@@ -21,7 +21,7 @@ public class ListController {
         this.service = service;
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<Object> findByUserId(@PathVariable int userId, @RequestHeader Map<String, String> headers) throws DataAccessException {
         AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
 
@@ -30,6 +30,22 @@ public class ListController {
         }
 
         List<FilmList> result = service.findByUserId(userId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("{listId}")
+    public ResponseEntity<Object> findByListId(@PathVariable int listId, @RequestHeader Map<String, String> headers) throws DataAccessException {
+        AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
+
+        if (!authorizationResult.isSuccess()) {
+            return authorizationResult.getResponseEntity();
+        }
+
+        FilmList result = service.findByListId(listId);
+
+        if (result.getUserId() != authorizationResult.getUser().getUserId()) {
+            return new ResponseEntity<>(List.of("Cannot view a list you do not own."), HttpStatus.FORBIDDEN);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -59,12 +75,55 @@ public class ListController {
         }
 
         FilmList existingList = service.findByListId(listId);
-
         if (existingList != null && authorizationResult.getUser().getUserId() != existingList.getUserId()) {
             return new ResponseEntity<>(List.of("Cannot delete a list you do not own."), HttpStatus.FORBIDDEN);
         }
 
         Result<FilmList> result = service.deleteById(listId);
+        if (!result.isSuccess()) {
+            return ErrorResponse.build(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/movie/{movieId}/list/{listId}")
+    public ResponseEntity<Object> addMovieToList(@PathVariable("movieId") int movieId,
+                                                 @PathVariable("listId") int listId,
+                                                 @RequestHeader Map<String, String> headers) {
+        AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
+
+        if (!authorizationResult.isSuccess()) {
+            return authorizationResult.getResponseEntity();
+        }
+
+        FilmList existingList = service.findByListId(listId);
+        if (existingList != null && authorizationResult.getUser().getUserId() != existingList.getUserId()) {
+            return new ResponseEntity<>(List.of("Cannot add to a list you do not own."), HttpStatus.FORBIDDEN);
+        }
+
+        Result<FilmList> result = service.addMovieToList(movieId, listId);
+        if (!result.isSuccess()) {
+            return ErrorResponse.build(result);
+        }
+        return new ResponseEntity<>(List.of(String.format("Movie id %s added to list id %s.", movieId, listId)), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/movie/{movieId}/list/{listId}")
+    public ResponseEntity<Object> removeMovieFromList(@PathVariable("movieId") int movieId,
+                                                      @PathVariable("listId") int listId,
+                                                      @RequestHeader Map<String, String> headers) {
+        AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
+
+        if (!authorizationResult.isSuccess()) {
+            return authorizationResult.getResponseEntity();
+        }
+
+        FilmList existingList = service.findByListId(listId);
+        if (existingList != null && authorizationResult.getUser().getUserId() != existingList.getUserId()) {
+            return new ResponseEntity<>(List.of("Cannot delete from list you do not own."), HttpStatus.FORBIDDEN);
+        }
+
+        Result<FilmList> result = service.removeMovieFromList(movieId, listId);
         if (!result.isSuccess()) {
             return ErrorResponse.build(result);
         }

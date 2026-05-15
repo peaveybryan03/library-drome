@@ -1,6 +1,8 @@
 package library.drome.data;
 
+import library.drome.data.mappers.MovieMapper;
 import library.drome.models.FilmList;
+import library.drome.models.Movie;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -34,11 +36,17 @@ public class ListJdbcClientRepository implements ListRepository {
                 select * from film_list where list_id = :list_id;
                 """;
 
-        return jdbcClient.sql(sql)
+        FilmList list = jdbcClient.sql(sql)
                 .param("list_id", listId)
                 .query(FilmList.class)
                 .optional()
                 .orElse(null);
+
+        if (list != null) {
+            list.setMovies(findMoviesByListId(listId));
+        }
+
+        return list;
     }
 
     @Override
@@ -67,5 +75,45 @@ public class ListJdbcClientRepository implements ListRepository {
     public boolean deleteById(int listId) throws DataAccessException {
         final String sql = "delete from film_list where list_id = :list_id;";
         return jdbcClient.sql(sql).param("list_id", listId).update() > 0;
+    }
+
+    @Override
+    public void addMovieToList(int movieId, int listId) throws DataAccessException {
+        final String sql = """
+                insert into movie_is_on_list (movie_id, list_id) values
+                (:movie_id, :list_id);
+                """;
+
+        jdbcClient.sql(sql)
+                .param("movie_id", movieId)
+                .param("list_id", listId)
+                .update();
+    }
+
+    @Override
+    public boolean removeMovieFromList(int movieId, int listId) throws DataAccessException {
+        final String sql = """
+                delete from movie_is_on_list
+                where movie_id = :movie_id and list_id = :list_id;
+                """;
+
+        return jdbcClient.sql(sql)
+                .param("movie_id", movieId)
+                .param("list_id", listId)
+                .update() > 0;
+    }
+
+    @Override
+    public List<Movie> findMoviesByListId(int listId) throws DataAccessException {
+        final String sql = """
+                select * from movie m
+                inner join movie_is_on_list moil on m.movie_id = moil.movie_id
+                where moil.list_id = :list_id;
+                """;
+
+        return jdbcClient.sql(sql)
+                .param("list_id", listId)
+                .query(new MovieMapper())
+                .list();
     }
 }

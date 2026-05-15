@@ -1,15 +1,33 @@
 @base_url = http://localhost:8080/api/list
-@diy_jwt = {\"userId\":1,\"email\":\"peaveybryan03@gmail.com\"}|-1329476323
+@diy_jwt1 = {\"userId\":1,\"email\":\"peaveybryan03@gmail.com\"}|-1329476323
+@diy_jwt2 = {\"userId\":2,\"email\":\"rylee@gmail.com\"}|1691815348
 
 # findByUserId - 1
+GET {{base_url}}/user/1 HTTP/1.1
+Authorization: {{diy_jwt1}}
+
+###
+
+# findByListId - 1
 GET {{base_url}}/1 HTTP/1.1
-Authorization: {{diy_jwt}}
+Authorization: {{diy_jwt1}}
+
+###
+
+# findByListId someone else's list
+GET {{base_url}}/2 HTTP/1.1
+Authorization: {{diy_jwt1}}
+
+###
+
+# findByListId unauthorized
+GET {{base_url}}/1 HTTP/1.1
 
 ###
 
 # create happy path
 POST {{base_url}} HTTP/1.1
-Authorization: {{diy_jwt}}
+Authorization: {{diy_jwt1}}
 Content-Type: application/json
 
 {
@@ -20,7 +38,7 @@ Content-Type: application/json
 
 # create no title
 POST {{base_url}} HTTP/1.1
-Authorization: {{diy_jwt}}
+Authorization: {{diy_jwt1}}
 Content-Type: application/json
 
 {
@@ -31,7 +49,7 @@ Content-Type: application/json
 
 # create duplicate title
 POST {{base_url}} HTTP/1.1
-Authorization: {{diy_jwt}}
+Authorization: {{diy_jwt1}}
 Content-Type: application/json
 
 {
@@ -52,21 +70,94 @@ Content-Type: application/json
 
 # delete happy path
 DELETE {{base_url}}/1 HTTP/1.1
-Authorization: {{diy_jwt}}
+Authorization: {{diy_jwt1}}
 
 ###
 
 # delete list does not exist
 DELETE {{base_url}}/999 HTTP/1.1
-Authorization: {{diy_jwt}}
+Authorization: {{diy_jwt1}}
 
 ###
 
 # delete not your list
 DELETE {{base_url}}/2 HTTP/1.1
-Authorization: {{diy_jwt}}
+Authorization: {{diy_jwt1}}
 
 ###
 
 # delete unauthorized
 DELETE {{base_url}}/1 HTTP/1.1
+
+###
+
+# addToList happy path
+POST {{base_url}}/movie/3/list/2
+Authorization: {{diy_jwt2}}
+
+###
+
+# addToList someone else's list
+POST {{base_url}}/movie/1/list/2
+Authorization: {{diy_jwt1}}
+
+###
+
+# addToList no auth
+POST {{base_url}}/movie/3/list/2
+
+###
+
+# addToList movie not found
+POST {{base_url}}/movie/999/list/1
+Authorization: {{diy_jwt1}}
+
+###
+
+# addToList list not found
+POST {{base_url}}/movie/1/list/999
+Authorization: {{diy_jwt1}}
+
+
+###
+
+# addToList movie already on list
+POST {{base_url}}/movie/1/list/1
+Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList happy path
+DELETE {{base_url}}/movie/1/list/1
+Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList someone else's list
+DELETE {{base_url}}/movie/1/list/1
+Authorization: {{diy_jwt2}}
+
+###
+
+# removeFromList no authorization
+DELETE {{base_url}}/movie/1/list/1
+
+###
+
+# removeFromList movie not found
+DELETE {{base_url}}/movie/999/list/1
+Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList list not found
+DELETE {{base_url}}/movie/1/list/999
+Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList movie not on list
+DELETE {{base_url}}/movie/2/list/2
+Authorization: {{diy_jwt2}}
+
+

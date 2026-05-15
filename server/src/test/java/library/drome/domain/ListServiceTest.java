@@ -76,4 +76,22 @@ class ListServiceTest {
         assertTrue(actual.isSuccess());
         assertEquals(listAfterCreate(), actual.getpayload());
     }
+
+    @Test
+    void deleteFailsWhenNotFound() {
+        when(listRepository.deleteById(999)).thenReturn(false);
+
+        Result<FilmList> actual = service.deleteById(999);
+
+        assertFalse(actual.isSuccess());
+    }
+
+    @Test
+    void deleteHappyPath() {
+        when(listRepository.deleteById(1)).thenReturn(true);
+
+        Result<FilmList> actual = service.deleteById(1);
+
+        assertTrue(actual.isSuccess());
+    }
 }

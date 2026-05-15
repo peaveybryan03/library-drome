@@ -57,4 +57,12 @@ public class ListService {
 
         return result;
     }
+
+    public Result<FilmList> deleteById(int listId) throws DataAccessException {
+        Result<FilmList> result = new Result<>();
+        if (!listRepository.deleteById(listId)) {
+            result.addErrorMessage("List id %s was not found.", ResultType.NOT_FOUND, listId);
+        }
+        return result;
+    }
 }

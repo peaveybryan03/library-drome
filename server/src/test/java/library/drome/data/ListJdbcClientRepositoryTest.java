@@ -41,6 +41,21 @@ class ListJdbcClientRepositoryTest {
     }
 
     @Test
+    void findByListIdHappyPath() {
+        FilmList actual = repository.findByListId(1);
+
+        assertNotNull(actual);
+        assertEquals(TestDataHelper.existingList(), actual);
+    }
+
+    @Test
+    void findByListIdFailsToFind() {
+        FilmList actual = repository.findByListId(999);
+
+        assertNull(actual);
+    }
+
+    @Test
     void shouldCreate() {
         FilmList toCreate = TestDataHelper.listToCreate();
         FilmList expected = TestDataHelper.listAfterCreate();

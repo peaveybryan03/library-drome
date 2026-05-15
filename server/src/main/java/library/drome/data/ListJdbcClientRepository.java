@@ -29,6 +29,19 @@ public class ListJdbcClientRepository implements ListRepository {
     }
 
     @Override
+    public FilmList findByListId(int listId) throws DataAccessException {
+        final String sql = """
+                select * from film_list where list_id = :list_id;
+                """;
+
+        return jdbcClient.sql(sql)
+                .param("list_id", listId)
+                .query(FilmList.class)
+                .optional()
+                .orElse(null);
+    }
+
+    @Override
     public FilmList create(FilmList list) throws DataAccessException {
         final String sql = """
                 insert into film_list (title, user_id)

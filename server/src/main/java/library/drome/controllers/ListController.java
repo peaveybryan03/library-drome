@@ -75,7 +75,6 @@ public class ListController {
         }
 
         FilmList existingList = service.findByListId(listId);
-
         if (existingList != null && authorizationResult.getUser().getUserId() != existingList.getUserId()) {
             return new ResponseEntity<>(List.of("Cannot delete a list you do not own."), HttpStatus.FORBIDDEN);
         }
@@ -107,6 +106,28 @@ public class ListController {
             return ErrorResponse.build(result);
         }
         return new ResponseEntity<>(List.of(String.format("Movie id %s added to list id %s.", movieId, listId)), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/movie/{movieId}/list/{listId}")
+    public ResponseEntity<Object> removeMovieFromList(@PathVariable("movieId") int movieId,
+                                                      @PathVariable("listId") int listId,
+                                                      @RequestHeader Map<String, String> headers) {
+        AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
+
+        if (!authorizationResult.isSuccess()) {
+            return authorizationResult.getResponseEntity();
+        }
+
+        FilmList existingList = service.findByListId(listId);
+        if (existingList != null && authorizationResult.getUser().getUserId() != existingList.getUserId()) {
+            return new ResponseEntity<>(List.of("Cannot delete from list you do not own."), HttpStatus.FORBIDDEN);
+        }
+
+        Result<FilmList> result = service.removeMovieFromList(movieId, listId);
+        if (!result.isSuccess()) {
+            return ErrorResponse.build(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

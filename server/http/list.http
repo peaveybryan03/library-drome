@@ -103,6 +103,11 @@ Authorization: {{diy_jwt1}}
 
 ###
 
+# addToList no auth
+POST {{base_url}}/movie/3/list/2
+
+###
+
 # addToList movie not found
 POST {{base_url}}/movie/999/list/1
 Authorization: {{diy_jwt1}}
@@ -119,5 +124,40 @@ Authorization: {{diy_jwt1}}
 # addToList movie already on list
 POST {{base_url}}/movie/1/list/1
 Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList happy path
+DELETE {{base_url}}/movie/1/list/1
+Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList someone else's list
+DELETE {{base_url}}/movie/1/list/1
+Authorization: {{diy_jwt2}}
+
+###
+
+# removeFromList no authorization
+DELETE {{base_url}}/movie/1/list/1
+
+###
+
+# removeFromList movie not found
+DELETE {{base_url}}/movie/999/list/1
+Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList list not found
+DELETE {{base_url}}/movie/1/list/999
+Authorization: {{diy_jwt1}}
+
+###
+
+# removeFromList movie not on list
+DELETE {{base_url}}/movie/2/list/2
+Authorization: {{diy_jwt2}}
 
 

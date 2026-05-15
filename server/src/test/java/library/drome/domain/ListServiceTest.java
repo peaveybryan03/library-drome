@@ -94,4 +94,62 @@ class ListServiceTest {
 
         assertTrue(actual.isSuccess());
     }
+
+//    @Test
+//    void addMovieToListFailsWhenMovieNotFound() {
+//
+//    }
+
+    @Test
+    void addMovieToListFailsWhenListNotFound() {
+        when(listRepository.findByListId(1)).thenReturn(null);
+
+        Result<FilmList> actual = service.addMovieToList(1, 999);
+
+        assertFalse(actual.isSuccess());
+        assertEquals(ResultType.NOT_FOUND, actual.getResultType());
+        assertTrue(actual.getErrorMessages().contains("List id 999 was not found."));
+    }
+
+    @Test
+    void addMovieToListFailsWhenMovieAlreadyOnList() {
+        when(listRepository.findByListId(1)).thenReturn(new FilmList());
+        when(listRepository.findMoviesByListId(1)).thenReturn(list1());
+
+        Result<FilmList> actual = service.addMovieToList(1, 1);
+
+        assertFalse(actual.isSuccess());
+        assertEquals(ResultType.INVALID, actual.getResultType());
+        assertTrue(actual.getErrorMessages().contains("Movie id 1 is already on list id 1."));
+    }
+
+    @Test
+    void addMovieToListHappyPath() {
+        when(listRepository.findByListId(2)).thenReturn(new FilmList());
+        when(listRepository.findMoviesByListId(2)).thenReturn(List.of());
+
+        Result<FilmList> actual = service.addMovieToList(1, 2);
+
+        assertTrue(actual.isSuccess());
+    }
+
+    @Test
+    void removeMovieFromListFailsWhenMovieNotOnList() {
+        when(listRepository.removeMovieFromList(1, 2)).thenReturn(false);
+
+        Result<FilmList> actual = service.removeMovieFromList(1, 2);
+
+        assertFalse(actual.isSuccess());
+        assertEquals(ResultType.NOT_FOUND, actual.getResultType());
+        assertTrue(actual.getErrorMessages().contains("Movie id 1 was not found on list id 2."));
+    }
+
+    @Test
+    void removeMovieFromListHappyPath() {
+        when(listRepository.removeMovieFromList(1, 1)).thenReturn(true);
+
+        Result<FilmList> actual = service.removeMovieFromList(1, 1);
+
+        assertTrue(actual.isSuccess());
+    }
 }

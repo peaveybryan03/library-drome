@@ -52,7 +52,7 @@ public class TestDataHelper {
         return new Movie(1, "The Doom Generation", 1995, Availability.NONE, "https://media.themoviedb.org/t/p/w220_and_h330_face/cRzRj2UBvIH8ryWhu5PNL2PzV7j.jpg");
     }
 
-    private static List<Movie> list1() {
+    public static List<Movie> list1() {
         return List.of(
                 theDoomGeneration(),
                 new Movie(2, "Lady Bird", 2017, Availability.BOTH, "https://media.themoviedb.org/t/p/w220_and_h330_face/gl66K7zRdtNYGrxyS2YDUP5ASZd.jpg"),

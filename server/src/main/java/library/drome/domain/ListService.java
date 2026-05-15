@@ -98,6 +98,13 @@ public class ListService {
     public Result<FilmList> removeMovieFromList(int movieId, int listId) {
         Result<FilmList> result = new Result<>();
 
+        // is movie in repo? !!!
+
+        if (listRepository.findByListId(listId) == null) {
+            result.addErrorMessage("List id %s was not found.", ResultType.NOT_FOUND, listId);
+            return result;
+        }
+
         if (!listRepository.removeMovieFromList(movieId, listId)) {
             result.addErrorMessage("Movie id %s was not found on list id %s.", ResultType.NOT_FOUND, movieId, listId);
         }

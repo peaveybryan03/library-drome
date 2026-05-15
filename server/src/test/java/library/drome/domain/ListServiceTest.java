@@ -133,8 +133,25 @@ class ListServiceTest {
         assertTrue(actual.isSuccess());
     }
 
+//    @Test
+//    void removeMovieFromListFailsWhenMovieNotFound() {
+//
+//    }
+
+    @Test
+    void removeMovieFromListFailsWhenListNotFound() {
+        when(listRepository.findByListId(999)).thenReturn(null);
+
+        Result<FilmList> actual = service.removeMovieFromList(1, 999);
+
+        assertFalse(actual.isSuccess());
+        assertEquals(ResultType.NOT_FOUND, actual.getResultType());
+        assertTrue(actual.getErrorMessages().contains("List id 999 was not found."));
+    }
+
     @Test
     void removeMovieFromListFailsWhenMovieNotOnList() {
+        when(listRepository.findByListId(2)).thenReturn(new FilmList());
         when(listRepository.removeMovieFromList(1, 2)).thenReturn(false);
 
         Result<FilmList> actual = service.removeMovieFromList(1, 2);
@@ -146,6 +163,7 @@ class ListServiceTest {
 
     @Test
     void removeMovieFromListHappyPath() {
+        when(listRepository.findByListId(1)).thenReturn(new FilmList());
         when(listRepository.removeMovieFromList(1, 1)).thenReturn(true);
 
         Result<FilmList> actual = service.removeMovieFromList(1, 1);

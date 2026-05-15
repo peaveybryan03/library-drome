@@ -27,6 +27,10 @@ public class ListService {
         return listRepository.findByUserId(userId);
     }
 
+    public FilmList findByListId(int listId) throws DataAccessException {
+        return listRepository.findByListId(listId);
+    }
+
     public Result<FilmList> create(FilmList list) throws DataAccessException {
         Result<FilmList> result = new Result<>();
 

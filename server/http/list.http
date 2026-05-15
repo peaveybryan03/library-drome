@@ -1,0 +1,72 @@
+@base_url = http://localhost:8080/api/list
+@diy_jwt = {\"userId\":1,\"email\":\"peaveybryan03@gmail.com\"}|-1329476323
+
+# findByUserId - 1
+GET {{base_url}}/1 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
+# create happy path
+POST {{base_url}} HTTP/1.1
+Authorization: {{diy_jwt}}
+Content-Type: application/json
+
+{
+    "title": "new list"
+}
+
+###
+
+# create no title
+POST {{base_url}} HTTP/1.1
+Authorization: {{diy_jwt}}
+Content-Type: application/json
+
+{
+    "title": ""
+}
+
+###
+
+# create duplicate title
+POST {{base_url}} HTTP/1.1
+Authorization: {{diy_jwt}}
+Content-Type: application/json
+
+{
+    "title": "list 1"
+}
+
+###
+
+# create no auth
+POST {{base_url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "new list"
+}
+
+###
+
+# delete happy path
+DELETE {{base_url}}/1 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
+# delete list does not exist
+DELETE {{base_url}}/999 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
+# delete not your list
+DELETE {{base_url}}/2 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
+# delete unauthorized
+DELETE {{base_url}}/1 HTTP/1.1

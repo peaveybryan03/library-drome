@@ -1,10 +1,14 @@
 package library.drome.models;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 import java.util.Objects;
 
 public class FilmList {
     private int listId;
+
+    @NotBlank(message = "Title is required.")
     private String title;
     private int userId;
 

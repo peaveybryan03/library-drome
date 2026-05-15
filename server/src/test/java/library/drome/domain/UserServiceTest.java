@@ -18,10 +18,10 @@ import static org.mockito.Mockito.when;
 class UserServiceTest {
 
     @Autowired
-    UserService service;
+    private UserService service;
 
     @MockBean
-    UserRepository repository;
+    private UserRepository repository;
 
     @Test
     void authenticateHappyPath() throws DataAccessException {

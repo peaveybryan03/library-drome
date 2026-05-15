@@ -27,12 +27,26 @@ class UserJdbcClientRepositoryTest {
     void findByEmailHappyPath() throws DataAccessException {
         User actual = repository.findByEmail("a@a.com");
 
-        assertEquals(TestDataHelper.existingUser(), actual);
+        assertEquals(TestDataHelper.existingUserFromDatabase(), actual);
     }
 
     @Test
     void findByEmailFailsToFind() throws DataAccessException {
         User actual = repository.findByEmail("does@not.exist");
+
+        assertNull(actual);
+    }
+
+    @Test
+    void findByIdHappyPath() throws DataAccessException {
+        User actual = repository.findById(1);
+
+        assertEquals(TestDataHelper.existingUserFromDatabase(), actual);
+    }
+
+    @Test
+    void findByIdFailsToFind() throws DataAccessException {
+        User actual = repository.findById(999);
 
         assertNull(actual);
     }

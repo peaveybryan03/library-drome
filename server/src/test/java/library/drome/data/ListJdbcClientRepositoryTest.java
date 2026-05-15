@@ -1,6 +1,7 @@
 package library.drome.data;
 
 import library.drome.models.FilmList;
+import library.drome.models.Movie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,5 +82,42 @@ class ListJdbcClientRepositoryTest {
         boolean actual = repository.deleteById(999);
 
         assertFalse(actual);
+    }
+
+    @Test
+    void shouldAddMovieToList() {
+        repository.addMovieToList(1, 2);
+
+        assertTrue(repository.findMoviesByListId(2).contains(TestDataHelper.theDoomGeneration()));
+    }
+
+    @Test
+    void shouldRemoveMovieFromList() {
+        boolean actual = repository.removeMovieFromList(1, 1);
+
+        assertTrue(actual);
+        assertFalse(repository.findMoviesByListId(1).contains(TestDataHelper.theDoomGeneration()));
+    }
+
+    @Test
+    void shouldNotRemoveMovieFromListWhenNotOnList() {
+        boolean actual = repository.removeMovieFromList(1, 2);
+
+        assertFalse(actual);
+    }
+
+    @Test
+    void findMoviesByListIdHappyPath() {
+        List<Movie> actual = repository.findMoviesByListId(1);
+
+        assertFalse(actual.isEmpty());
+        assertEquals(4, actual.size());
+    }
+
+    @Test
+    void findMoviesByListIdEmptyList() {
+        List<Movie> actual = repository.findMoviesByListId(2);
+
+        assertTrue(actual.isEmpty());
     }
 }

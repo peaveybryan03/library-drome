@@ -1,6 +1,8 @@
 package library.drome.data;
 
+import library.drome.models.Availability;
 import library.drome.models.FilmList;
+import library.drome.models.Movie;
 import library.drome.models.User;
 
 import java.util.Objects;
@@ -37,5 +39,9 @@ public class TestDataHelper {
         FilmList list = listToCreate();
         list.setListId(3);
         return list;
+    }
+
+    public static Movie theDoomGeneration() {
+        return new Movie(1, "The Doom Generation", 1995, Availability.NONE, "https://media.themoviedb.org/t/p/w220_and_h330_face/cRzRj2UBvIH8ryWhu5PNL2PzV7j.jpg");
     }
 }

@@ -14,7 +14,7 @@ public interface ListRepository {
 
     boolean deleteById(int listId) throws DataAccessException;
 
-    boolean addMovieToList(int movieId, int listId) throws DataAccessException;
+    void addMovieToList(int movieId, int listId) throws DataAccessException;
 
     boolean removeMovieFromList(int movieId, int listId) throws DataAccessException;
 

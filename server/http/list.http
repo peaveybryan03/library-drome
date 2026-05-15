@@ -47,3 +47,26 @@ Content-Type: application/json
 {
     "title": "new list"
 }
+
+###
+
+# delete happy path
+DELETE {{base_url}}/1 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
+# delete list does not exist
+DELETE {{base_url}}/999 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
+# delete not your list
+DELETE {{base_url}}/2 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
+# delete unauthorized
+DELETE {{base_url}}/1 HTTP/1.1

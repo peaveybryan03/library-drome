@@ -7,6 +7,12 @@ Authorization: {{diy_jwt}}
 
 ###
 
+# findByListId - 1
+GET {{base_url}}/1 HTTP/1.1
+Authorization: {{diy_jwt}}
+
+###
+
 # create happy path
 POST {{base_url}} HTTP/1.1
 Authorization: {{diy_jwt}}

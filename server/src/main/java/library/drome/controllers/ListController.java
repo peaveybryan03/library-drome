@@ -33,6 +33,18 @@ public class ListController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("{listId}")
+    public ResponseEntity<Object> findByListId(@PathVariable int listId, @RequestHeader Map<String, String> headers) throws DataAccessException {
+        AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
+
+        if (!authorizationResult.isSuccess()) {
+            return authorizationResult.getResponseEntity();
+        }
+
+        FilmList result = service.findByListId(listId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody FilmList list, @RequestHeader Map<String, String> headers) throws DataAccessException {
         AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);

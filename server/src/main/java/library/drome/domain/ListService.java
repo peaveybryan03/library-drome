@@ -44,10 +44,10 @@ public class ListService {
         }
 
         for (FilmList existingList : listRepository.findByUserId(list.getUserId())) {
-            if (existingList.getTitle().equals(list.getTitle())) {
+            if (existingList.getTitle().trim().equalsIgnoreCase(list.getTitle().trim())) {
                 result.addErrorMessage("User already has a list with this title.", ResultType.INVALID);
+                break;
             }
-            break;
         }
 
         if (result.isSuccess()) {

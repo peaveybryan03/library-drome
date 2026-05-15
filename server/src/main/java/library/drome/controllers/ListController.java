@@ -2,6 +2,7 @@ package library.drome.controllers;
 
 import library.drome.data.DataAccessException;
 import library.drome.domain.ListService;
+import library.drome.domain.Result;
 import library.drome.models.FilmList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,23 @@ public class ListController {
 
         List<FilmList> result = service.findByUserId(userId);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> create(@RequestBody FilmList list, @RequestHeader Map<String, String> headers) throws DataAccessException {
+        AuthorizationResult authorizationResult = AuthorizationHelper.getUserFromHeaders(headers);
+
+        if (!authorizationResult.isSuccess()) {
+            return authorizationResult.getResponseEntity();
+        }
+
+        list.setUserId(authorizationResult.getUser().getUserId());
+
+        Result<FilmList> result = service.create(list);
+        if (!result.isSuccess()) {
+            return ErrorResponse.build(result);
+        }
+        return new ResponseEntity<>(result.getpayload(), HttpStatus.CREATED);
     }
 
 }

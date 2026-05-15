@@ -4,3 +4,46 @@
 # findByUserId - 1
 GET {{base_url}}/1 HTTP/1.1
 Authorization: {{diy_jwt}}
+
+###
+
+# create happy path
+POST {{base_url}} HTTP/1.1
+Authorization: {{diy_jwt}}
+Content-Type: application/json
+
+{
+    "title": "new list"
+}
+
+###
+
+# create no title
+POST {{base_url}} HTTP/1.1
+Authorization: {{diy_jwt}}
+Content-Type: application/json
+
+{
+    "title": ""
+}
+
+###
+
+# create duplicate title
+POST {{base_url}} HTTP/1.1
+Authorization: {{diy_jwt}}
+Content-Type: application/json
+
+{
+    "title": "list 1"
+}
+
+###
+
+# create no auth
+POST {{base_url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "new list"
+}

@@ -23,7 +23,7 @@ public class ListService {
         this.validator = validator;
     }
 
-    public List<FilmList> findByUserId(int userId) {
+    public List<FilmList> findByUserId(int userId) throws DataAccessException {
         return listRepository.findByUserId(userId);
     }
 

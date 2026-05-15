@@ -17,7 +17,7 @@ public class ListJdbcClientRepository implements ListRepository {
     }
 
     @Override
-    public List<FilmList> findByUserId(int userId) {
+    public List<FilmList> findByUserId(int userId) throws DataAccessException {
         final String sql = """
                 select * from film_list where user_id = :user_id;
                 """;
@@ -29,7 +29,7 @@ public class ListJdbcClientRepository implements ListRepository {
     }
 
     @Override
-    public FilmList create(FilmList list) {
+    public FilmList create(FilmList list) throws DataAccessException {
         final String sql = """
                 insert into film_list (title, user_id)
                 values (:title, :user_id);

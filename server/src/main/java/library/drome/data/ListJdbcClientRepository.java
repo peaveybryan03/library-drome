@@ -42,7 +42,9 @@ public class ListJdbcClientRepository implements ListRepository {
                 .optional()
                 .orElse(null);
 
-        // set movies on List
+        if (list != null) {
+            list.setMovies(findMoviesByListId(listId));
+        }
 
         return list;
     }

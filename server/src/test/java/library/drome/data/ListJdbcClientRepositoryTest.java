@@ -46,7 +46,7 @@ class ListJdbcClientRepositoryTest {
         FilmList actual = repository.findByListId(1);
 
         assertNotNull(actual);
-        assertEquals(TestDataHelper.existingList(), actual);
+        assertEquals(TestDataHelper.existingListWithMoviesAttached(), actual);
     }
 
     @Test

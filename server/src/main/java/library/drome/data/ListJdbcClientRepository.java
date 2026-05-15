@@ -1,6 +1,7 @@
 package library.drome.data;
 
 import library.drome.models.FilmList;
+import library.drome.models.Movie;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -34,11 +35,15 @@ public class ListJdbcClientRepository implements ListRepository {
                 select * from film_list where list_id = :list_id;
                 """;
 
-        return jdbcClient.sql(sql)
+        FilmList list = jdbcClient.sql(sql)
                 .param("list_id", listId)
                 .query(FilmList.class)
                 .optional()
                 .orElse(null);
+
+        // set movies on List
+
+        return list;
     }
 
     @Override
@@ -67,5 +72,20 @@ public class ListJdbcClientRepository implements ListRepository {
     public boolean deleteById(int listId) throws DataAccessException {
         final String sql = "delete from film_list where list_id = :list_id;";
         return jdbcClient.sql(sql).param("list_id", listId).update() > 0;
+    }
+
+    @Override
+    public boolean addMovieToList(int movieId, int listId) throws DataAccessException {
+        return false;
+    }
+
+    @Override
+    public boolean removeMovieFromList(int movieId, int listId) throws DataAccessException {
+        return false;
+    }
+
+    @Override
+    public List<Movie> findMoviesByListId(int listId) throws DataAccessException {
+        return List.of();
     }
 }

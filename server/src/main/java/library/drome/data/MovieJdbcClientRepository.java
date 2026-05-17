@@ -16,7 +16,7 @@ public class MovieJdbcClientRepository implements MovieRepository {
     }
 
     @Override
-    public Movie findById(int movieId) throws DataAccessException {
+    public Movie findByMovieId(int movieId) throws DataAccessException {
         final String sql = """
                 select * from movie where movie_id = :movie_id;
                 """;

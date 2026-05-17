@@ -27,7 +27,7 @@ class MovieJdbcClientRepositoryTest {
     void findByIdHappyPath() {
         Movie expected = TestDataHelper.theDoomGeneration();
 
-        Movie actual = repository.findById(1);
+        Movie actual = repository.findByMovieId(1);
 
         assertNotNull(actual);
         assertEquals(expected, actual);
@@ -35,7 +35,7 @@ class MovieJdbcClientRepositoryTest {
 
     @Test
     void findByIdNotFound() {
-        Movie actual = repository.findById(999);
+        Movie actual = repository.findByMovieId(999);
 
         assertNull(actual);
     }
@@ -45,12 +45,12 @@ class MovieJdbcClientRepositoryTest {
         Movie toCreate = TestDataHelper.movieToCreate();
         Movie expected = TestDataHelper.movieAfterCreate();
 
-        assertNull(repository.findById(expected.getMovieId()));
+        assertNull(repository.findByMovieId(expected.getMovieId()));
 
         Movie actual = repository.create(toCreate);
 
         assertEquals(expected, actual);
-        assertNotNull(repository.findById(expected.getMovieId()));
+        assertNotNull(repository.findByMovieId(expected.getMovieId()));
     }
 
 

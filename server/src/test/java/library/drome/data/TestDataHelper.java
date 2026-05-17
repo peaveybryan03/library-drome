@@ -1,9 +1,6 @@
 package library.drome.data;
 
-import library.drome.models.Availability;
-import library.drome.models.FilmList;
-import library.drome.models.Movie;
-import library.drome.models.User;
+import library.drome.models.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -69,5 +66,19 @@ public class TestDataHelper {
                 new Movie(3, "Bones and All", 2022, Availability.BOTH, "https://media.themoviedb.org/t/p/w220_and_h330_face/ayfr4iL0jVV9mquN7SKvjOidvRH.jpg"),
                 new Movie(4, "Women on the Verge of a Nervous Breakdown", 1988, Availability.DVD, "https://media.themoviedb.org/t/p/w220_and_h330_face/8C5FJlUo96pj1xAs2BKnB58PYzi.jpg")
         );
+    }
+
+    public static Genre horror() {
+        return new Genre(11, "Horror");
+    }
+
+    public static Genre genreToCreate() {
+        return new Genre(0, "New Genre");
+    }
+
+    public static Genre genreAfterCreate() {
+        Genre genre = genreToCreate();
+        genre.setGenreId(19);
+        return genre;
     }
 }

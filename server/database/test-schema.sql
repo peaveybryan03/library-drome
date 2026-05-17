@@ -111,6 +111,8 @@ create procedure set_known_good_state()
 begin
 	delete from movie;
 	alter table movie auto_increment = 1;
+	delete from genre;
+	alter table genre auto_increment = 1;
 	delete from film_list;
 	alter table film_list auto_increment = 1;
 	delete from `user`;
@@ -135,6 +137,26 @@ begin
     	(2, 1),
     	(3, 1), 
     	(4, 1);
+    
+    insert into genre (name) values
+    	("Action"),
+    	("Adventure"),
+    	("Animation"),
+    	("Comedy"),
+    	("Crime"),
+    	("Documentary"),
+    	("Drama"),
+    	("Family"),
+    	("Fantasy"),
+    	("History"),
+    	("Horror"),
+    	("Music"),
+    	("Mystery"),
+    	("Romance"),
+    	("Science Fiction"),
+    	("Thriller"),
+    	("War"),
+    	("Western");
 
 
 end //

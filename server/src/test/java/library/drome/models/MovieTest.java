@@ -50,7 +50,7 @@ class MovieTest {
         assertEquals(1, violations.size());
 
         ConstraintViolation<Movie> first = violations.stream().findFirst().orElse(null);
-        assertEquals("Year must be after 1880.", first.getMessage());
+        assertEquals("Year must be 1880 or later.", first.getMessage());
     }
 
     @Test

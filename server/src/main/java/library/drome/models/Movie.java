@@ -14,7 +14,7 @@ public class Movie {
     @NotBlank(message = "Title is required.")
     private String title;
 
-    @Min(value = 1880, message = "Year must be after 1880.")
+    @Min(value = 1880, message = "Year must be 1880 or later.")
     private int year;
 
     @NotNull(message = "Availability is required.")

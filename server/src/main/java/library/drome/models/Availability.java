@@ -1,19 +1,25 @@
 package library.drome.models;
 
 public enum Availability {
-    NONE("none"),
-    DVD("DVD"),
-    BLU_RAY("Blu-ray"),
-    BOTH("both");
+    NONE("none",  "none"),
+    DVD("DVD", "dvd"),
+    BLU_RAY("Blu-ray", "blu-ray"),
+    BOTH("both", "both");
 
     private final String name;
+    private final String databaseName;
 
-    Availability(String name) {
+    Availability(String name, String databaseName) {
         this.name = name;
+        this.databaseName = databaseName;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDatabaseName() {
+        return databaseName;
     }
 
     public static Availability findByName(String name) {

@@ -1,9 +1,13 @@
 package library.drome.models;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 public class Genre {
     private int genreId;
+
+    @NotBlank(message = "Name is required.")
     private String name;
 
     public Genre(int genreId, String name) {

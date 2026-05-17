@@ -1,13 +1,25 @@
 package library.drome.models;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.Objects;
 
 public class Movie {
+
     private int movieId;
+
+    @NotBlank(message = "Title is required.")
     private String title;
+
+    @Min(value = 1880, message = "Year must be after 1880.")
     private int year;
+
+    @NotNull(message = "Availability is required.")
     private Availability availability;
+
     private String posterUrl;
 
     private List<Genre> genres;

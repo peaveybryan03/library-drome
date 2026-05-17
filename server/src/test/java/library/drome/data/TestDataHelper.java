@@ -52,6 +52,16 @@ public class TestDataHelper {
         return new Movie(1, "The Doom Generation", 1995, Availability.NONE, "https://media.themoviedb.org/t/p/w220_and_h330_face/cRzRj2UBvIH8ryWhu5PNL2PzV7j.jpg");
     }
 
+    public static Movie movieToCreate() {
+        return new Movie(0, "Thelma & Louise", 1991, Availability.BOTH, "https://media.themoviedb.org/t/p/w220_and_h330_face/gQSUVGR80RVHxJywtwXm2qa1ebi.jpg");
+    }
+
+    public static Movie movieAfterCreate() {
+        Movie movie = movieToCreate();
+        movie.setMovieId(5);
+        return movie;
+    }
+
     public static List<Movie> list1() {
         return List.of(
                 theDoomGeneration(),

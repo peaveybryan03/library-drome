@@ -1,0 +1,57 @@
+@base_url = http://localhost:8080/api/movie 
+
+# findByMovieId - 5
+GET {{base_url}}/5 HTTP/1.1
+
+###
+
+# create happy path
+POST {{base_url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Thelma & Louise",
+    "year": 1991,
+    "availability": "BOTH",
+    "posterUrl": "https://media.themoviedb.org/t/p/w220_and_h330_face/gQSUVGR80RVHxJywtwXm2qa1ebi.jpg"
+}
+
+###
+
+# create no title
+POST {{base_url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "",
+    "year": 1991,
+    "availability": "BOTH",
+    "posterUrl": "https://media.themoviedb.org/t/p/w220_and_h330_face/gQSUVGR80RVHxJywtwXm2qa1ebi.jpg"
+}
+
+###
+
+# create invalid year
+POST {{base_url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Thelma & Louise",
+    "year": 1879,
+    "availability": "BOTH",
+    "posterUrl": "https://media.themoviedb.org/t/p/w220_and_h330_face/gQSUVGR80RVHxJywtwXm2qa1ebi.jpg"
+}
+
+###
+
+# create no availability
+POST {{base_url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Thelma & Louise",
+    "year": 1991,
+    "posterUrl": "https://media.themoviedb.org/t/p/w220_and_h330_face/gQSUVGR80RVHxJywtwXm2qa1ebi.jpg"
+}
+
+###
